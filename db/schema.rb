@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180729205342) do
+ActiveRecord::Schema.define(version: 20180801004255) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "exercise_logs", force: :cascade do |t|
+    t.bigint "workout_id", null: false
+    t.bigint "exercise_id", null: false
+    t.jsonb "data", default: {}, null: false
+    t.index ["exercise_id"], name: "index_exercise_logs_on_exercise_id"
+    t.index ["workout_id"], name: "index_exercise_logs_on_workout_id"
+  end
 
   create_table "exercise_targets", force: :cascade do |t|
-    t.integer "exercise_id", null: false
-    t.integer "muscle_group_id", null: false
+    t.bigint "exercise_id", null: false
+    t.bigint "muscle_group_id", null: false
     t.index ["exercise_id"], name: "index_exercise_targets_on_exercise_id"
     t.index ["muscle_group_id"], name: "index_exercise_targets_on_muscle_group_id"
   end
@@ -43,4 +54,15 @@ ActiveRecord::Schema.define(version: 20180729205342) do
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
   end
 
+  create_table "workouts", force: :cascade do |t|
+    t.datetime "day", null: false
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "exercise_logs", "exercises"
+  add_foreign_key "exercise_logs", "workouts"
+  add_foreign_key "exercise_targets", "exercises"
+  add_foreign_key "exercise_targets", "muscle_groups"
 end
