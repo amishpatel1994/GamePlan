@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180728193017) do
+ActiveRecord::Schema.define(version: 20180729205342) do
+
+  create_table "exercise_targets", force: :cascade do |t|
+    t.integer "exercise_id", null: false
+    t.integer "muscle_group_id", null: false
+    t.index ["exercise_id"], name: "index_exercise_targets_on_exercise_id"
+    t.index ["muscle_group_id"], name: "index_exercise_targets_on_muscle_group_id"
+  end
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", default: "", null: false
+    t.string "video_embed_url", null: false
+    t.string "image_url", null: false
+    t.index ["name"], name: "index_exercises_on_name", unique: true
+  end
+
+  create_table "muscle_groups", force: :cascade do |t|
+    t.string "name", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", null: false
