@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180801004255) do
   create_table "exercises", force: :cascade do |t|
     t.string "name", null: false
     t.string "description", default: "", null: false
-    t.string "video_embed_url", null: false
+    t.string "video_embed_url", default: "", null: false
     t.string "image_url", null: false
     t.index ["name"], name: "index_exercises_on_name", unique: true
   end

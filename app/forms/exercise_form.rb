@@ -4,7 +4,7 @@ class ExerciseForm
 
   attr_accessor *PERMITTED_PARAMS
 
-  validates :muscle_groups, :name, :image_url, :video_embed_url, presence: true
+  validates :muscle_groups, :name, :image_url, presence: true
 
   def model_attributes
     {

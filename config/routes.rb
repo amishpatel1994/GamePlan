@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get "auth/failure", to: redirect("/")
 
   resources :exercises, only: %w(index show create update)
+  resources :workouts
+  resources :exercise_logs, only: %w(show create update destroy)
 end
