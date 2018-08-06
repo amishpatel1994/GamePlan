@@ -11,12 +11,19 @@ class ExercisesController < ApplicationController
 
   def create
     form = ExerciseForm.new(permitted_params)
-    exercise = FindOrCreateExercise.new(form).call
-    render json: exercise
+    if form.valid?
+      exercise = FindOrCreateExercise.new(form).call
+      render json: exercise, status: :created
+    else
+      render json: form.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   def update
-    debugger
+    form = ExerciseForm.new(permitted_params)
+    exercise = Exercise.find(params[:id])
+    exercise = UpdateExercise.new(exercise, form).call
+    render json: exercise
   end
 
   private
